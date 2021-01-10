@@ -1,0 +1,23 @@
+[
+    {
+        "long_name": "pound",
+        "short_name": "lb",
+        "backend_name": "Pounds",
+        "decimal_places": "2",
+        "step_size": "0.25"
+    },
+    {
+        "long_name": "ounce",
+        "short_name": "oz",
+        "backend_name": "Ounces",
+        "decimal_places": "0",
+        "step_size": "1"
+    },
+    {
+        "long_name": "gram",
+        "short_name": "g",
+        "backend_name": "Grams",
+        "decimal_places": "0",
+        "step_size": "1"
+    }
+]
