@@ -11,13 +11,7 @@ use Event;
 use Admin\Models\Menus_model;
 
 use Admin\Widgets\Form;
-use Admin\Widgets\Toolbar;
-
-
 use Admin\Classes\AdminController;
-use Admin\Controllers\Orders;
-
-use Igniter\Cart\Classes\CartManager;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\DB;

@@ -3,10 +3,7 @@
 namespace CupNoodles\PriceByWeight\Models;
 
 use Admin\Traits\Locationable;
-use Carbon\Carbon;
-use Igniter\Flame\Auth\Models\User;
-use Igniter\Flame\Database\Traits\Purgeable;
-use Igniter\Flame\Location\Models\AbstractLocation;
+
 use Model;
 
 /**

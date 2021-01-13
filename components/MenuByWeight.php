@@ -3,11 +3,6 @@
 namespace CupNoodles\PriceByWeight\Components;
 
 use Igniter\Local\Components\Menu;
-use Igniter\Cart\Models\Menus_model;
-
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request;
-use Location;
 
 use CupNoodles\PriceByWeight\Models\Units;
 

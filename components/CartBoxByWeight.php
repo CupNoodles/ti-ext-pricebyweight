@@ -3,14 +3,9 @@ namespace CupNoodles\PriceByWeight\Components;
 
 use Igniter\Cart\Components\CartBox;
 
-use ApplicationException;
-use Cart;
 use Exception;
-//use Igniter\Cart\Classes\CartManager;
+
 use CupNoodles\PriceByWeight\Classes\CartManagerByWeight as CartManager;
-use Igniter\Cart\Models\CartSettings;
-use Location;
-use Redirect;
 use Request;
 
 class CartBoxByWeight extends CartBox
@@ -25,7 +20,6 @@ class CartBoxByWeight extends CartBox
     public function onRun()
     {
         $this->addJs('$/igniter/cart/assets/js/cartbox.js', 'cart-box-js');
-        //$this->addJs('js/cartbox.js', 'cart-box-js');
         $this->addJs('$/igniter/cart/assets/js/cartitem.js', 'cart-item-js');
         $this->addJs('$/igniter/cart/assets/js/cartbox.modal.js', 'cart-box-modal-js');
 
