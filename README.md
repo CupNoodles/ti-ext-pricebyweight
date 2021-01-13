@@ -15,7 +15,7 @@ Manage item unit of measure labels and step size. Step size determines the incre
 
 | Name     | Page variable                  | Description                                      | Extends |
 | -------- | ------------------------------ | ------------------------------------------------ | ------- |
-| CartBoxByWight  | `@component('cartBoxByWeight')`  | Cartbox that shows unit of measure if set, and increment/decrements by step size. | [igniter.cart cartBox](git@github.com:CupNoodles/ti-ext-pricebyweight.git) |
+| CartBoxByWeight  | `@component('cartBoxByWeight')`  | Cartbox that shows unit of measure if set, and increment/decrements by step size. | [igniter.cart cartBox](git@github.com:CupNoodles/ti-ext-pricebyweight.git) |
 | CheckoutByWeight | `@component('checkoutByWeight')` | Checkout form that shows unit of measure if set.. | [igniter.cart checkout](git@github.com:CupNoodles/ti-ext-pricebyweight.git)
 | MenuByWeight | `@component('menuByWeight')` | Menu List that shows unit of measure if set, and increment/decrements by step size. | [igniter.local menu](git@github.com:CupNoodles/ti-ext-pricebyweight.git) |
 
