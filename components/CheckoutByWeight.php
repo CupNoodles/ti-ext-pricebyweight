@@ -11,6 +11,9 @@ class CheckoutByWeight extends Checkout{
     {
         $this->orderManager = OrderManager::instance();
         $this->cartManager = CartManager::instance();
+
+        $this->addComponent('checkout', 'checkoutAlias', $this->properties);
+        $this->prepareVars();
     }
 
     public function onRender()

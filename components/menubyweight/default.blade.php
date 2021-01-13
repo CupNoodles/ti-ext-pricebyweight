@@ -1,6 +1,6 @@
 @if (!$hideMenuSearch)
     <div class="menu-search">
-        @partial('@searchbar')
+        @partial('menuAlias::searchbar')
     </div>
 @endif
 

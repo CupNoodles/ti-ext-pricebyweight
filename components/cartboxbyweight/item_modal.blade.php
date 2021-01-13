@@ -37,7 +37,7 @@
                     class="menu-options"
                     data-control="item-options"
                 >
-                    @partial('@item_options')
+                    @partial('cartBoxAlias::item_options')
                 </div>
 
                 <div class="menu-comment">

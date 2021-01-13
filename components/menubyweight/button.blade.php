@@ -6,7 +6,7 @@
     data-menu-id="{{ $menuItem->menu_id }}"
     data-quantity="{{ $menuItem->minimum_qty }}"
     @else
-    data-request="{{ $updateCartItemEventHandler }}"
+    data-request="cartBoxByWeight::onUpdateCart"
     data-request-data="menuId: '{{ $menuItem->menu_id }}', quantity: '{{ $menuItem->minimum_qty }}'"
     data-replace-loading="fa fa-spinner fa-spin"
     @endif

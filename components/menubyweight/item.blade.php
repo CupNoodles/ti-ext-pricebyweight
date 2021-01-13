@@ -43,6 +43,6 @@
         </div>
     </div>
     <div class="d-flex flex-wrap align-items-center allergens">
-        @partial('@allergens', ['menuItem' => $menuItem, 'menuItemObject' => $menuItemObject])
+        @partial('menuAlias::allergens', ['menuItem' => $menuItem, 'menuItemObject' => $menuItemObject])
     </div>
 </div>

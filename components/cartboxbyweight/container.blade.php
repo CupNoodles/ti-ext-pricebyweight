@@ -14,4 +14,4 @@
         </div>
     </div>
 </div>
-@partial($__SELF__.'::mobile')
+@partial('cartBoxAlias::mobile')

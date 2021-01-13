@@ -1,6 +1,6 @@
 <div
     data-control="cart-box"
-    data-load-item-handler="{{ $loadCartItemEventHandler }}"
+    data-load-item-handler="cartBoxByWeight::onLoadItemPopup"
     data-update-item-handler="{{ $updateCartItemEventHandler }}"
     data-apply-coupon-handler="{{ $applyCouponEventHandler }}"
     data-apply-tip-handler="{{ $applyTipEventHandler }}"
@@ -14,21 +14,21 @@
         </div>
 
         <div id="cart-coupon">
-            @partial('@coupon_form')
+            @partial('cartBoxAlias::coupon_form')
         </div>
 
         <?php if ($__SELF__->tippingEnabled()) { ?>
         <div id="cart-tip">
-            @partial('@tip_form')
+            @partial('cartBoxAlias::tip_form')
         </div>
         <?php } ?>
 
         <div id="cart-totals">
-            @partial('@totals')
+            @partial('cartBoxAlias::totals')
         </div>
 
         <div id="cart-buttons" class="mt-3">
-            @partial('@buttons')
+            @partial('cartBoxAlias::buttons')
         </div>
     </div>
 </div>

@@ -9,7 +9,13 @@ use CupNoodles\PriceByWeight\Models\Units;
 class MenuByWeight extends Menu{
 
 
-
+    public function onRun()
+    {   
+        parent::onRun();
+        $this->addComponent('localMenu', 'menuAlias', $this->properties);
+        $this->page['menuList'] = $this->loadList();
+        $this->page['menuListCategories'] = $this->menuListCategories;
+    }
 
     public function createMenuItemObject($menuItem){
         $menuItem->casts = null;

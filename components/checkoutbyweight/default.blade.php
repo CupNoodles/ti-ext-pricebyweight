@@ -4,5 +4,5 @@
     data-delete-payment-handler="{{ $deletePaymentEventHandler }}"
     data-partial="checkoutForm"
 >
-    @partial('@form')
+    @partial('checkoutAlias::form')
 </div>

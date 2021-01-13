@@ -9,7 +9,7 @@
                     <button
                         type="button"
                         class="cart-btn btn btn-light btn-sm text-muted"
-                        data-request="{{ $removeCartItemEventHandler }}"
+                        data-request="cartBoxByWeight::onRemoveItem"
                         data-replace-loading="fa fa-spinner fa-spin"
                         data-request-data="rowId: '{{ $cartItem->rowId }}', menuId: '{{ $cartItem->id }}'"
                     ><i class="fa fa-minus"></i></button>
