@@ -101,7 +101,17 @@
                     <tbody>
                     @foreach($model->getOrderMenus() as $menuItem)
                         <tr>
-                            <td>{{ $menuItem->quantity }}xnhellsdfo</td>
+                            {{-- 
+                            // Replaced column for cupnoodles\pricebyweight
+                            <td>{{ $menuItem->quantity }}x</td>
+                            --}}
+                            <td>
+                            @if($menuItem->uom_tag != '')
+                                {{ number_format($menuItem->quantity, $menuItem->uom_decimals) }}&nbsp;{{ $menuItem->uom_tag }}
+                            @else
+                                {{ number_format($menuItem->quantity, 0) }}
+                            @endif
+                            </td>
                             <td class="text-left">{{ $menuItem->name }}<br/>
                                 @if($menuItemOptions = $menuItemsOptions->get($menuItem->order_menu_id))
                                     <div>

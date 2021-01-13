@@ -48,7 +48,7 @@ class AddPriceByWeight extends Migration
             $table->string('uom_tag');
             $table->integer('uom_decimals');
 
-            $table->decimal('actual_amt', '15', '4');
+
             $table->decimal('quantity', '15', '4')->change();
             
         });

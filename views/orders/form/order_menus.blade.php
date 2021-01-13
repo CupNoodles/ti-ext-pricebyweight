@@ -16,14 +16,19 @@
         <tbody>
         @foreach($menuItems as $menuItem)
             <tr data-order-menu-edit="order-menu-edit-line" id="order_menu_row_{{$menuItem->order_menu_id}}">
+                {{--
+                // Replaced colunm for cupnoodles\priceperweight
+                <td>{{ $menuItem->quantity }}x</td>
+                --}}
                 <td>
                     @if($menuItem->uom_tag != '')
                         {{ number_format($menuItem->quantity, $menuItem->uom_decimals) }} 
                         {{ $menuItem->uom_tag }}
-                        x
                     @else
-                        {{ number_format($menuItem->quantity, 0) }} x
+                        {{ number_format($menuItem->quantity, 0) }}
+
                     @endif
+                    x
                 </td>
 
                 <td><b>{{ $menuItem->name }}</b>
@@ -56,9 +61,6 @@
             @continue($model->isCollectionType() AND $total->code == 'delivery')
             @php $thickLine = ($total->code == 'order_total' OR $total->code == 'total') @endphp
             <tr>
-                <td
-                    class="{{ ($loop->iteration === 1 OR $thickLine) ? 'lead font-weight-bold' : 'text-muted' }}" width="1"
-                ></td>
                 <td
                     class="{{ ($loop->iteration === 1 OR $thickLine) ? 'lead font-weight-bold' : 'text-muted' }}" width="1"
                 ></td>

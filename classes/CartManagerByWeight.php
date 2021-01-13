@@ -7,7 +7,7 @@ use Igniter\Cart\Classes\CartManager;
 use Admin\Models\Menu_item_option_values_model;
 use Admin\Models\Menu_item_options_model;
 use Igniter\Cart\Models\CartSettings;
-
+use Igniter\Cart\Models\Menus_model;
 use Igniter\Coupons\Models\Coupons_model;
 use Igniter\Flame\Cart\CartItem;
 use Igniter\Flame\Cart\Exceptions\InvalidRowIDException;
@@ -15,8 +15,6 @@ use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Flame\Traits\Singleton;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
-
-use CupNoodles\PriceByWeight\Models\Menus_model;
 
 class CartManagerByWeight extends CartManager
 {

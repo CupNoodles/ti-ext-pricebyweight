@@ -9,9 +9,10 @@ use System\Classes\BaseExtension;
 // Admin-UI
 use Event;
 use Admin\Models\Menus_model;
+
 use Admin\Widgets\Form;
 use Admin\Widgets\Toolbar;
-use Admin\Models\Orders_model;
+
 
 use Admin\Classes\AdminController;
 use Admin\Controllers\Orders;
@@ -62,6 +63,10 @@ class Extension extends BaseExtension
 
         Menus_Model::extend(function ($model) {
             $model->relation['belongsTo']['uom'] = ['CupNoodles\PriceByWeight\Models\Units', 'foreignKey' => 'uom_id'];
+            
+            // Model::add_class() uses array_merge, and can therefore be used to set the protected $casts parameter
+            $model->addCasts(['stock_qty' => 'float']);
+            $model->addCasts(['minimum_qty' => 'float']);
         });
 
         Event::listen('system.formRequest.extendValidator', function ($dataholder, $request){
@@ -81,6 +86,8 @@ class Extension extends BaseExtension
         Event::listen('admin.form.extendFieldsBefore', function (Form $form) {
 
             if($form->model instanceof Menus_model){
+                
+
                 $pricebyweight = ['price_by_weight' => [
                     'label' => 'lang:cupnoodles.pricebyweight::default.label_price_by_weight',
                     'type' => 'switch',
@@ -118,7 +125,7 @@ class Extension extends BaseExtension
                 //->update(['om.uom_tag' => 'uom.short_name', 'om.uom_decimals' => 'uom.decimal_places' ]);
                 ->update(['om.uom_tag' => DB::raw("`".DB::getTablePrefix()."uom`.`short_name`"), 'om.uom_decimals' => DB::raw("`".DB::getTablePrefix()."uom`.`decimal_places`")]);                
         });
-
+        
 
         Relation::morphMap([
             'units_of_measure' => 'CupNoodles\PriceByWeight\Models\Units_model',

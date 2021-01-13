@@ -22,6 +22,16 @@ class CartBoxByWeight extends CartBox
         );
     }
 
+    public function onRun()
+    {
+        $this->addJs('$/igniter/cart/assets/js/cartbox.js', 'cart-box-js');
+        //$this->addJs('js/cartbox.js', 'cart-box-js');
+        $this->addJs('$/igniter/cart/assets/js/cartitem.js', 'cart-item-js');
+        $this->addJs('$/igniter/cart/assets/js/cartbox.modal.js', 'cart-box-modal-js');
+
+        $this->prepareVars();
+    }
+
     public function onRemoveItem()
     {
         try {
