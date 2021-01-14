@@ -22,4 +22,29 @@ Manage item unit of measure labels and step size. Step size determines the incre
 
 ### Usage within a Theme
 
-Replace any `@partial('cartBox::container')` with `@partial('cartBoxByWeight::container')`.
+In your tempate layout's front-matter sections, replace any invocations to `cartBox`, `checkout`, `localMenu` with `cartBoxByWeight`, `checkoutByWeight`, `localMenuByWeight` respectively. 
+
+For instance, in tastyigniter-orange, `_layouts/local.blade` could have
+
+```
+'[cartBox]':
+    checkStockCheckout: 1
+    showCartItemThumb: 1
+    pageIsCheckout: 0
+    pageIsCart: 0
+    checkoutPage: checkout/checkout
+```
+
+replaced with 
+
+```
+'[cartBoxByWeight]':
+    checkStockCheckout: 1
+    showCartItemThumb: 1
+    pageIsCheckout: 0
+    pageIsCart: 0
+    checkoutPage: checkout/checkout
+```
+
+
+From there, you'll need to replace any invocations to those specific templates. For the example above, replace `@partial('cartBox::container')` with `@partial('cartBoxByWeight::container')`.
