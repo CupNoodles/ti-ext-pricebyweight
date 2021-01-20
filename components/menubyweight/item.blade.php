@@ -17,7 +17,7 @@
         <div class="menu-content flex-grow-1 mr-3">
             <h6 class="menu-name">{{ $menuItem->menu_name }}</h6>
             <p class="menu-desc text-muted mb-0">
-                {!! nl2br($menuItem->menu_description) !!}
+                            {!! nl2br($menuItem->menu_description) !!}
             </p>
         </div>
         <div class="menu-detail d-flex justify-content-end col-3 p-0">
@@ -31,8 +31,7 @@
             @endif
 
             <div class="menu-price pr-3">
-                <b>{!! $menuItemObject->menuPrice > 0 ? currency_format($menuItemObject->menuPrice) : lang('main::lang.text_free') !!}
-                {!! $menuItemObject->isPriceByWeight ? '/' . $menuItemObject->priceUnitAbbr : '' !!}</b>
+                <b>{!! $menuItemObject->menuPrice > 0 ? currency_format($menuItemObject->menuPrice) : lang('main::lang.text_free') !!}{!! $menuItemObject->isPriceByWeight ? '/' . $menuItemObject->priceUnitAbbr : '' !!}</b>
             </div>
 
             @isset ($updateCartItemEventHandler)
@@ -43,6 +42,6 @@
         </div>
     </div>
     <div class="d-flex flex-wrap align-items-center allergens">
-        @partial('menuAlias::allergens', ['menuItem' => $menuItem, 'menuItemObject' => $menuItemObject])
+        @partial('@allergens', ['menuItem' => $menuItem, 'menuItemObject' => $menuItemObject])
     </div>
 </div>

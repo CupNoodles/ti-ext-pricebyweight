@@ -3,6 +3,7 @@
         <ul>
             @foreach ($cart->content()->reverse() as $cartItem)
                 @php
+                
                 $uom_info = CupNoodles\PriceByWeight\Models\Units::getUnitForMenuId($cartItem->id);
                 @endphp
                 <li>
@@ -29,7 +30,7 @@
                         <span class="name">
                             <span class="quantity font-weight-bold">
                                 {{ $cartItem->qty }} 
-                                @if( $uom_info->price_by_weight )
+                                @if( isset( $uom_info->price_by_weight ) && $uom_info->price_by_weight  )
                                     {!! $uom_info->short_name !!}
                                 @endif
                                 @lang('igniter.cart::default.text_times')
