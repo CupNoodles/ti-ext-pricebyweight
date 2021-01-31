@@ -3,7 +3,7 @@
         <ul>
             @foreach ($cart->content()->reverse() as $cartItem)
                 @php
-                
+
                 $uom_info = CupNoodles\PriceByWeight\Models\Units::getUnitForMenuId($cartItem->id);
                 @endphp
                 <li>

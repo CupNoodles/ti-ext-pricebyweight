@@ -32,6 +32,7 @@ class CartBoxByWeight extends CartBox
         $this->prepareVars();
     }
 
+    
     public function onLoadItemPopup()
     {
         $menuItem = $this->cartManager->findMenuItem(post('menuId'));

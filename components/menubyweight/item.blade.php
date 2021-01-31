@@ -15,9 +15,16 @@
         @endif
 
         <div class="menu-content flex-grow-1 mr-3">
-            <h6 class="menu-name mb-0">{{ $menuItem->menu_name }}</h6>
+            <a
+                class="name-image"
+                data-cart-control="load-item"
+                data-menu-id="{{ $menuItem->menu_id  }}"
+                style="cursor: pointer"
+            >
+                <h6 class="menu-name mb-0">{{ $menuItem->menu_name }}</h6>
+            </a>
             <p class="menu-desc text-muted mb-0">
-                            {!! nl2br($menuItem->menu_description) !!}
+                {!! nl2br($menuItem->menu_description) !!}
             </p>
         </div>
         <div class="menu-detail d-flex justify-content-end col-3 p-0">
