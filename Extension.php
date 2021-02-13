@@ -163,7 +163,7 @@ class Extension extends BaseExtension
 
         return [
             'CupNoodles\PriceByWeight\Components\MenuByWeight' => [
-                'code' => 'localMenuByWeight',
+                'code' => 'menuByWeight',
                 'name' => 'lang:igniter.local::default.menu.component_title',
                 'description' => 'lang:igniter.local::default.menu.component_desc',
             ],
