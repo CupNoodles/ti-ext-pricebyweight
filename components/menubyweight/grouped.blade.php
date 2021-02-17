@@ -8,7 +8,7 @@
                 @endphp
                 <div id="category-{{ $menuCategoryAlias }}-heading" role="tab">
                     <h4
-                        class="category-title cursor-pointer {{ $loop->iteration >= 100 ? 'collapsed' : '' }}"
+                        class="category-title cursor-pointer {{ $loop->iteration >= $menuCollapseCategoriesAfter ? 'collapsed' : '' }}"
                         data-toggle="collapse"
                         data-target="#category-{{ $menuCategoryAlias }}-collapse"
                         aria-expanded="false"
@@ -17,7 +17,7 @@
                 </div>
                 <div
                     id="category-{{ $menuCategoryAlias }}-collapse"
-                    class="collapse {{ $loop->iteration < 100 ? 'show' : '' }}"
+                    class="collapse {{ $loop->iteration < $menuCollapseCategoriesAfter ? 'show' : '' }}"
                     role="tabpanel" aria-labelledby="{{ $menuCategoryAlias }}"
                 >
                     <div class="menu-category">
