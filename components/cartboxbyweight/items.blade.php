@@ -38,7 +38,7 @@
                             {{ $cartItem->name }}
                         </span>
                         @if ($cartItem->hasOptions())
-                            @partial('@cart_item_options', ['itemOptions' => $cartItem->options])
+                            @partial('cartBoxAlias::cart_item_options', ['itemOptions' => $cartItem->options])
                         @endif
                         @if (!empty($cartItem->comment))
                             <p class="comment text-muted small">
