@@ -4,6 +4,7 @@ namespace CupNoodles\PriceByWeight;
 
 
 use System\Classes\BaseExtension;
+use System\Classes\ExtensionManager;
 
 
 // Admin-UI
@@ -128,14 +129,18 @@ class Extension extends BaseExtension
 
 
         // Inject our own template for Order Menu.
-        // Overide the template for invoices
-        // Note these will be overridden again if you have the OrderMenuEdit extension installed
-        AdminController::extend(function ($controller) {
-            if( in_array('~/app/admin/views/orders', $controller->partialPath)){
-                array_unshift($controller->partialPath, '~/extensions/cupnoodles/pricebyweight/views');
-                array_unshift($controller->viewPath, '~/extensions/cupnoodles/pricebyweight/views/orders');
-            }
-        });
+        // cupnoodles.ordermenuedit also overrides this partial path - don't push this if you've got that extension as well
+        
+        $manager = ExtensionManager::instance();
+        $extension = $manager->findExtension('cupnoodles.ordermenuedit');
+        if($extension && $extension->disabled == false){
+            AdminController::extend(function ($controller) {
+                if( in_array('~/app/admin/views/orders', $controller->partialPath)){
+                    array_unshift($controller->partialPath, '~/extensions/cupnoodles/pricebyweight/views');
+                    array_unshift($controller->viewPath, '~/extensions/cupnoodles/pricebyweight/views/orders');
+                }
+            });
+        }
     
     }
 
