@@ -133,7 +133,7 @@ class Extension extends BaseExtension
         
         $manager = ExtensionManager::instance();
         $extension = $manager->findExtension('cupnoodles.ordermenuedit');
-        if($extension && $extension->disabled == false){
+        if(!$extension || isset($extension->disabled) && $extension->disabled == true){
             AdminController::extend(function ($controller) {
                 if( in_array('~/app/admin/views/orders', $controller->partialPath)){
                     array_unshift($controller->partialPath, '~/extensions/cupnoodles/pricebyweight/views');
