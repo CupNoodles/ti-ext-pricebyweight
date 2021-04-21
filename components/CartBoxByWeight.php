@@ -65,7 +65,7 @@ class CartBoxByWeight extends CartBox
             '#cart-items' => $this->renderPartial('cartBoxByWeight::items'),
             '#cart-coupon' => $this->renderPartial('cartBoxAlias::coupon_form'),
             '#cart-tip' => $this->renderPartial('cartBoxAlias::tip_form'),
-            '#cart-totals' => $this->renderPartial('cartBoxAlias::totals'),
+            '#cart-totals' => $this->renderPartial('cartBoxByWeight::totals'),
             '#cart-buttons' => $this->renderPartial('cartBoxAlias::buttons'),
             '[data-cart-total]' => currency_format(Cart::total()),
             '#notification' => $this->renderPartial('flash'),
