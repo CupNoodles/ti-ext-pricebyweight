@@ -26,7 +26,7 @@ class CartManagerByWeight extends CartManager
         $cartItem = $this->getCartItem($rowId);
         $menuItem = $this->findMenuItem($cartItem->id);
 
-        $quantity = $quantity > $menuItem->minimum_qty ? $quantity : $cartItem->qty - $menuItem->minimum_qty;
+        //$quantity = $quantity > $menuItem->minimum_qty ? $quantity : $cartItem->qty - $menuItem->minimum_qty;
 
         return $this->cart->update($rowId, $quantity);
     }
