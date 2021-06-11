@@ -10,6 +10,16 @@ use Igniter\Flame\Exception\ApplicationException;
 class CartManagerByWeight extends CartManager
 {
 
+
+    public function hasPriceByWeight(){
+        
+        foreach($this->cart->content() as $ix=>$menu){
+            if($menu->model->price_by_weight)
+                return true;
+        }
+        return false;
+    }
+
     public function findMenuItem($menuId)
     {
         if (!is_numeric($menuId))

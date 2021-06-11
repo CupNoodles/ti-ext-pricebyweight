@@ -4,12 +4,15 @@ namespace CupNoodles\PriceByWeight\Components;
 
 use Igniter\Cart\Components\Checkout;
 use CupNoodles\PriceByWeight\Classes\OrderManagerByWeight as OrderManager;
-use CupNoodles\PriceByWeight\Classes\CartManagerByWeight as CartManager;    
+use CupNoodles\PriceByWeight\Classes\CartManagerByWeight as CartManager;
 
+use Admin\Models\Payment_profiles_model;
 
+use Redirect;
 use Location;
 
 class CheckoutByWeight extends Checkout{
+
     public function initialize()
     {
         $this->orderManager = OrderManager::instance();
@@ -27,6 +30,15 @@ class CheckoutByWeight extends Checkout{
 
         $this->addJs('$/igniter/cart/assets/js/checkout.js', 'checkout-js');
     }
+
+    protected function prepareVars()
+    {
+        parent::prepareVars();
+
+        $this->page['orderManager'] = $this->orderManager;
+        $this->page['cartManager'] = $this->cartManager;
+    }
+
 
     protected function createRules()
     {
@@ -51,6 +63,66 @@ class CheckoutByWeight extends Checkout{
         }
 
         return $namedRules;
+    }
+
+
+    public function onConfirm()
+    {
+
+        if ($redirect = $this->isOrderMarkedAsProcessed())
+            return $redirect;
+
+        $data = post();
+        $data['cancelPage'] = $this->property('redirectPage');
+        $data['successPage'] = $this->property('successPage');
+
+        $data = $this->processDeliveryAddress($data);
+
+        $this->validateCheckoutSecurity();
+
+        try {
+            $this->validate($data, $this->createRules(), [
+                'email.unique' => lang('igniter.cart::default.checkout.error_email_exists'),
+            ]);
+
+            $order = $this->getOrder();
+            
+            if ($order->isDeliveryType()) {
+                $this->orderManager->validateDeliveryAddress(array_get($data, 'address', []));
+            }
+            
+
+            $this->orderManager->saveOrder($order, $data);
+            
+            if (($redirect = $this->orderManager->processPayment($order, $data)) === FALSE)
+                return;
+            
+            if ($redirect instanceof RedirectResponse)
+                return $redirect;
+
+            if ($redirect = $this->isOrderMarkedAsProcessed())
+                return $redirect;
+
+            if ($redirect = $this->orderHasPaymentProfile()){
+                return $redirect;
+            }
+        }
+        catch (Exception $ex) {
+            flash()->warning($ex->getMessage())->important();
+
+            return Redirect::back()->withInput();
+        }
+    }
+
+    protected function orderHasPaymentProfile()
+    {
+        $order = $this->getOrder();
+        $profile = Payment_profiles_model::where('order_id', $order->order_id)->get();
+        if(count($profile) >0){
+            $redirectUrl = $order->getUrl($this->property('successPage'));
+            return Redirect::to($redirectUrl);
+        }
+        return false;
     }
 
 }

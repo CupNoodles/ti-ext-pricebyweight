@@ -9,6 +9,7 @@ use CupNoodles\PriceByWeight\Classes\CartManagerByWeight as CartManager;
 use Request;
 
 use Cart;
+use Event;
 
 class CartBoxByWeight extends CartBox
 {
@@ -66,7 +67,7 @@ class CartBoxByWeight extends CartBox
             '#cart-coupon' => $this->renderPartial('cartBoxAlias::coupon_form'),
             '#cart-tip' => $this->renderPartial('cartBoxAlias::tip_form'),
             '#cart-totals' => $this->renderPartial('cartBoxByWeight::totals'),
-            '#cart-buttons' => $this->renderPartial('cartBoxAlias::buttons'),
+            '#cart-buttons' => $this->renderPartial('cartBoxByWeight::buttons'),
             '[data-cart-total]' => currency_format(Cart::total()),
             '#notification' => $this->renderPartial('flash'),
         ];
@@ -89,6 +90,13 @@ class CartBoxByWeight extends CartBox
             if (Request::ajax()) throw $ex;
             else flash()->alert($ex->getMessage());
         }
+    }
+
+    public function onProceedToCheckout()
+    {
+        Event::fire('cupnoodles.cartBoxByWeight.onProceedToCheckout', [$this->cartManager->getCart()]);
+        return parent::onProceedToCheckout();
+        
     }
 
 }
