@@ -11,12 +11,17 @@ use Admin\Models\Payment_profiles_model;
 use Redirect;
 use Location;
 
+use Illuminate\Support\Facades\App;
+
 class CheckoutByWeight extends Checkout{
+
+    protected $location;
 
     public function initialize()
     {
         $this->orderManager = OrderManager::instance();
         $this->cartManager = CartManager::instance();
+        $this->location = App::make('location');
 
         $this->addComponent('checkout', 'checkoutAlias', $this->properties);
         $this->prepareVars();
@@ -77,7 +82,7 @@ class CheckoutByWeight extends Checkout{
         $data['successPage'] = $this->property('successPage');
 
         $data = $this->processDeliveryAddress($data);
-
+        
         $this->validateCheckoutSecurity();
 
         try {
@@ -90,7 +95,9 @@ class CheckoutByWeight extends Checkout{
             if ($order->isDeliveryType()) {
                 $this->orderManager->validateDeliveryAddress(array_get($data, 'address', []));
             }
-            
+            elseif($data['address']['address_id'] == 0){ // pickup orders
+                $data['address'] = $this->location->current()->getAddress();
+            }
 
             $this->orderManager->saveOrder($order, $data);
             
