@@ -39,7 +39,7 @@ class AddPriceByWeight extends Migration
         }
 
         Schema::table('menus', function (Blueprint $table) {
-            $table->decimal('stock_qty', '15', '4')->change();
+            //$table->decimal('stock_qty', '15', '4')->change();
             $table->decimal('minimum_qty', '15', '4')->change();
         });
 
@@ -65,7 +65,7 @@ class AddPriceByWeight extends Migration
         Schema::dropIfExists('units_of_measure');
 
         Schema::table('menus', function (Blueprint $table) {
-            $table->integer('stock_qty')->change();
+            //$table->integer('stock_qty')->change();
             $table->integer('minimum_qty')->change();
         });
 

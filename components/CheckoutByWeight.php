@@ -23,8 +23,6 @@ class CheckoutByWeight extends Checkout{
         $this->cartManager = CartManager::instance();
         $this->location = App::make('location');
 
-        $this->addComponent('checkout', 'checkoutAlias', $this->properties);
-        $this->prepareVars();
     }
 
     public function onRender()
@@ -42,8 +40,31 @@ class CheckoutByWeight extends Checkout{
 
         $this->page['orderManager'] = $this->orderManager;
         $this->page['cartManager'] = $this->cartManager;
+
     }
 
+    public function onChoosePayment()
+    {
+        $paymentCode = post('code');
+        
+
+        
+        if (!$payment = $this->orderManager->getPayment($paymentCode))
+            throw new ApplicationException(lang('igniter.cart::default.checkout.error_invalid_payment'));
+
+
+        $this->orderManager->applyCurrentPaymentFee($payment->code);
+
+        $this->controller->pageCycle();
+
+        $result = $this->fetchPartials();
+
+        if ($cartBox = $this->controller->findComponentByAlias($this->property('cartBoxByWeight'))) {
+            $result = array_merge($result, $cartBox->fetchPartials());
+        }
+
+        return $result;
+    }
 
     protected function createRules()
     {
@@ -69,6 +90,8 @@ class CheckoutByWeight extends Checkout{
 
         return $namedRules;
     }
+
+
 
 
     public function onConfirm()
