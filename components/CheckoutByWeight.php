@@ -23,6 +23,11 @@ class CheckoutByWeight extends Checkout{
         $this->cartManager = CartManager::instance();
         $this->location = App::make('location');
 
+        // yeesh this should be standard
+        $this->cartManager->getCart()->getCondition('tip')->removeable = true;
+
+
+
     }
 
     public function onRender()
@@ -41,7 +46,59 @@ class CheckoutByWeight extends Checkout{
         $this->page['orderManager'] = $this->orderManager;
         $this->page['cartManager'] = $this->cartManager;
 
+
+        $this->page['onApplyTip'] = $this->getEventHandler('onApplyTip');
+
     }
+
+    public function onApplyTip()
+    {
+        try {
+            $tipType = post('tip_type');
+            if (!in_array($tipType, ['staff', 'driver']))
+                throw new ApplicationException(lang('igniter.cart::default.alert_tip_not_applied'));
+
+            $amountType = post('amount_type');
+            if (!in_array($amountType, ['none', 'amount', 'custom']))
+                throw new ApplicationException(lang('igniter.cart::default.alert_tip_not_applied'));
+
+            $amount = post('amount');
+            if (preg_match('/^\d+([\.\d]{2})?([%])?$/', $amount) === FALSE)
+                throw new ApplicationException(lang('igniter.cart::default.alert_tip_not_applied'));
+
+            //$cartManager = CartManager::instance();
+            
+
+            $this->cartManager->applyCondition('tip', [
+                'amountType' => $amountType,
+                'amount' => $amount,
+                'removeable' => true
+            ]);
+            $this->cartManager->getCart()->getCondition('tip')->removeable = true;
+
+            $this->controller->pageCycle();
+
+            return $this->fetchTipPartials();
+        }
+        catch (Exception $ex) {
+            if (Request::ajax()) throw $ex;
+            else flash()->alert($ex->getMessage());
+        }
+    }
+
+    public function fetchTipPartials()
+    {
+        $this->prepareVars();
+
+        return [
+            '#checkout-subtotals' => $this->renderPartial('@subtotals'),
+            '#checkout-staff-tip' => $this->renderPartial('@tip_box'),
+            //'#checkout-driver-tip' => $this->renderPartial('@driver_tip_box'),
+            '#checkout-totals' => $this->renderPartial('@totals'),
+        ];
+    }
+
+
 
     public function onChoosePayment()
     {
@@ -52,6 +109,12 @@ class CheckoutByWeight extends Checkout{
         if (!$payment = $this->orderManager->getPayment($paymentCode))
             throw new ApplicationException(lang('igniter.cart::default.checkout.error_invalid_payment'));
 
+        // if this is a cod then set tip to 0
+        if($paymentCode == 'cod'){
+
+            $this->cartManager->removeCondition('tip');
+
+        }
 
         $this->orderManager->applyCurrentPaymentFee($payment->code);
 
@@ -63,7 +126,18 @@ class CheckoutByWeight extends Checkout{
             $result = array_merge($result, $cartBox->fetchPartials());
         }
 
+
         return $result;
+    }
+
+    public function fetchPartials()
+    {
+        $this->prepareVars();
+
+        return [
+            '[data-partial="checkoutPayments"]' => $this->renderPartial('@payments'),
+            '#checkout-affix' => $this->renderPartial('@checkout-affix')
+        ];
     }
 
     protected function createRules()
@@ -81,7 +155,7 @@ class CheckoutByWeight extends Checkout{
 
         if (Location::orderTypeIsDelivery()) {
             $namedRules[] = ['address.address_1', 'lang:igniter.cart::default.checkout.label_address_1', 'required|min:3|max:128'];
-            $namedRules[] = ['address.address_2', 'lang:igniter.cart::default.checkout.label_address_2', 'sometimes|min:1|max:128'];
+            $namedRules[] = ['address.address_2', 'Apt #', 'required|min:1|max:128'];
             $namedRules[] = ['address.city', 'lang:igniter.cart::default.checkout.label_city', 'sometimes|min:2|max:128'];
             $namedRules[] = ['address.state', 'lang:igniter.cart::default.checkout.label_state', 'sometimes|max:128'];
             $namedRules[] = ['address.postcode', 'lang:igniter.cart::default.checkout.label_postcode', 'string'];
@@ -118,7 +192,7 @@ class CheckoutByWeight extends Checkout{
             if ($order->isDeliveryType()) {
                 $this->orderManager->validateDeliveryAddress(array_get($data, 'address', []));
             }
-            elseif($data['address']['address_id'] == 0){ // pickup orders
+            else{ // pickup orders
                 $data['address'] = $this->location->current()->getAddress();
             }
 
