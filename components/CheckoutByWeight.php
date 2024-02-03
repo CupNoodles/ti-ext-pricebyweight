@@ -66,14 +66,15 @@ class CheckoutByWeight extends Checkout{
             if (preg_match('/^\d+([\.\d]{2})?([%])?$/', $amount) === FALSE)
                 throw new ApplicationException(lang('igniter.cart::default.alert_tip_not_applied'));
 
-            //$cartManager = CartManager::instance();
+            $cartManager = CartManager::instance();
             
 
-            $this->cartManager->applyCondition('tip', [
+            $cartManager->applyCondition($tipType == 'driver' ? 'driver_tip' : 'tip', [
                 'amountType' => $amountType,
                 'amount' => $amount,
                 'removeable' => true
             ]);
+
             $this->cartManager->getCart()->getCondition('tip')->removeable = true;
 
             $this->controller->pageCycle();
@@ -93,7 +94,7 @@ class CheckoutByWeight extends Checkout{
         return [
             '#checkout-subtotals' => $this->renderPartial('@subtotals'),
             '#checkout-staff-tip' => $this->renderPartial('@tip_box'),
-            //'#checkout-driver-tip' => $this->renderPartial('@driver_tip_box'),
+            '#checkout-driver-tip' => $this->renderPartial('checkoutRelay::driver_tip_box'),
             '#checkout-totals' => $this->renderPartial('@totals'),
         ];
     }
