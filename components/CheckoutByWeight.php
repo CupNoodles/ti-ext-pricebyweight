@@ -193,7 +193,7 @@ class CheckoutByWeight extends Checkout{
             if ($order->isDeliveryType() && setting('location_order') == 1) {
                 $this->orderManager->validateDeliveryAddress(array_get($data, 'address', []));
             }
-            else{ // pickup orders
+            elseif (!$order->isDeliveryType()){ // pickup orders
                 $data['address'] = $this->location->current()->getAddress();
             }
 
