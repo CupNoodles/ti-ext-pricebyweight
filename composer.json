@@ -1,0 +1,50 @@
+{
+    "name": "cupnoodles/ti-ext-pricebyweight",
+    "type": "tastyigniter-package",
+    "license": "MIT",
+    "description": "Sell menu items by weight (lb, oz, kg, g...) for butcher shops, delis and produce stands.",
+    "authors": [
+        {
+            "name": "CupNoodles"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "tastyigniter/core": "^v4.5",
+        "tastyigniter/ti-ext-cart": "^v4.5",
+        "tastyigniter/ti-ext-local": "^v4.0",
+        "tastyigniter/ti-ext-payregister": "^v4.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "CupNoodles\\PriceByWeight\\": "src/"
+        }
+    },
+    "extra": {
+        "tastyigniter-extension": {
+            "code": "cupnoodles.pricebyweight",
+            "name": "Price By Weight",
+            "icon": {
+                "class": "fa fa-balance-scale",
+                "color": "#FFFFFF",
+                "backgroundColor": "#1B294B"
+            },
+            "homepage": "https://github.com/CupNoodles/ti-ext-pricebyweight"
+        },
+        "branch-alias": {
+            "dev-master": "4.0.x-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "test:lint": "vendor/bin/pint --test --ansi",
+        "test:lint-fix": "vendor/bin/pint --ansi"
+    }
+}
